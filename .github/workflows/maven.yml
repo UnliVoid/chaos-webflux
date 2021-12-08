@@ -39,6 +39,9 @@ jobs:
         cache: maven
     - name: Build Image with Maven
       run: mvn spring-boot:build-image -DskipTests
+      id: builder1
     - name: Push Image to Registry
-      run: |-
-        docker push "ghcr.io/unlivoid/$IMAGE_NAME:${GITHUB_REF#refs/*/}"
+      uses: docker/build-push-action@v2
+      with:
+        builder: builder1
+        push: true
